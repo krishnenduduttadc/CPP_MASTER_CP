@@ -1,0 +1,36 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+// Bottom Up NCR % m 
+vector<vector<int>> binomialCoefficient(int n, int k) {
+    vector<vector<int>> table(n + 1, vector<int>(k + 1, 0));
+
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= min(i, k); j++) {
+            // base case 
+            if (j == 0 || j == i) {
+                table[i][j] = 1;
+            } else {
+                table[i][j] = table[i - 1][j - 1] + table[i - 1][j];
+            }
+        }
+    }
+    return table;
+}
+
+int main() {
+    int n = 5;
+    // Predefined queries
+    vector<int> queries = {0, 1, 2, 3, 4};
+
+    vector<vector<int>> table = binomialCoefficient(n, n);
+
+    for (int k : queries) {
+        if (k <= n) {
+            cout << table[n][k] << endl;
+        }
+    }
+
+    return 0;
+}
